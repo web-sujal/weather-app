@@ -1,17 +1,21 @@
 import React, {
+  Dispatch,
   FormEvent,
-  FormHTMLAttributes,
+  SetStateAction,
   useEffect,
   useState,
+  useRef,
+  MutableRefObject,
 } from "react";
 import axios from "axios";
 
 type WeatherAppProps = {
   city: string;
+  setCity: Dispatch<SetStateAction<string>>;
 };
 
-const WeatherApp = ({ city }: WeatherAppProps) => {
-  const [serchedCity, setSearchedCity] = useState("");
+const WeatherApp = ({ city, setCity }: WeatherAppProps) => {
+  // states
   const [weatherData, setWeatherData] = useState({
     name: "",
     main: {
@@ -30,12 +34,17 @@ const WeatherApp = ({ city }: WeatherAppProps) => {
     },
   });
 
+  // refs
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // useEffects
   useEffect(() => {
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2180eac4c664ce81bd7e87e191a8736d`
       )
       .then((res) => {
+        console.log(res.data);
         setWeatherData({
           name: res.data.name,
           main: {
@@ -53,33 +62,33 @@ const WeatherApp = ({ city }: WeatherAppProps) => {
   // event handlers
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchedCity((e.currentTarget[0] as HTMLInputElement).value);
+    setCity((e.currentTarget[0] as HTMLInputElement).value);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   return (
     <div className="">
       <div
-        className="relative flex justify-between items-center text-white 
-    my-8 px-2 py-10"
+        className="relative flex flex-col justify-center items-center
+         space-y-1 mt-32 py-4 text-white"
       >
         <h1
-          className="text-6xl font-bold text-transparent 
-      bg-clip-text bg-gradient-to-b from-white via-white to-transparent
-      font-display z-10"
+          className="text-6xl font-display z-10 text-transparent 
+        bg-clip-text bg-gradient-to-b from-white via-white to-transparent
+        "
         >
-          {weatherData.main.temp}℃
+          {`${(weatherData.main.temp - 273.15).toFixed(1)}℃`}
         </h1>
 
-        <span
-          className="-rotate-90 text-2xl font-display 
-       translate-x-10 z-10"
-        >
+        <span className=" text-xl font-display z-10">
           It's {weatherData.weather[0].main}
         </span>
 
         <div
           className="absolute top-0 right-0 left-0 bottom-0 bg-black
-         z-0 opacity-30"
+         z-0 opacity-40"
         ></div>
       </div>
 
@@ -93,6 +102,7 @@ const WeatherApp = ({ city }: WeatherAppProps) => {
           className="p-2 rounded-l-lg outline-none text-gray-700"
           placeholder="enter city name..."
           type="text"
+          ref={inputRef}
         />
         <button
           className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 

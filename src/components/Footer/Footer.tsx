@@ -3,10 +3,15 @@ import React from "react";
 const Footer = () => {
   return (
     <div
-      className="h-20 container m-0 bg-white rounded-t-2xl w-full"
-      id="footer"
+      className="container flex justify-center bottom-0 w-full 
+    mt-10 px-5"
     >
-      Footer
+      <div
+        className="absolute max-w-3xl w-full rounded-t-3xl
+       h-28 px-6 pt-4 bg-white"
+      >
+        Footer
+      </div>
     </div>
   );
 };

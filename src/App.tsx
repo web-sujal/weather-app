@@ -16,7 +16,6 @@ function App() {
     navigator.geolocation.getCurrentPosition((position) => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
-      console.log(latitude, longitude);
 
       // reverse geocoding
       if (latitude !== 0 && longitude !== 0) {
@@ -26,7 +25,6 @@ function App() {
           )
           .then((res) => {
             if (res.data && res.data[0]) {
-              console.log(res.data);
               setCity(res.data[0].name);
               setIsLoading(false);
             } else {
@@ -53,8 +51,8 @@ function App() {
   return (
     <div className="relative min-h-screen" id="root">
       <Navbar city={city} />
-      <WeatherApp city={city} />
-      {/* <Footer /> */}
+      <WeatherApp city={city} setCity={setCity} />
+      <Footer />
     </div>
   );
 }
