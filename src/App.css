@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  background-image: url("/images/desktop-rain.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 576px) {
+  #root {
+    background-image: url("/images/mobile-sunny.jpg");
+    background-position: center;
+  }
+}
