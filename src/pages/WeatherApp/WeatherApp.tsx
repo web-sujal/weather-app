@@ -13,9 +13,19 @@ type WeatherAppProps = {
   city: string;
   setCity: Dispatch<SetStateAction<string>>;
   isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  error: boolean;
+  setError: Dispatch<SetStateAction<boolean>>;
 };
 
-const WeatherApp = ({ city, setCity, isLoading }: WeatherAppProps) => {
+const WeatherApp = ({
+  city,
+  setCity,
+  isLoading,
+  setIsLoading,
+  error,
+  setError,
+}: WeatherAppProps) => {
   // states
   const [weatherData, setWeatherData] = useState({
     name: "",
@@ -40,12 +50,15 @@ const WeatherApp = ({ city, setCity, isLoading }: WeatherAppProps) => {
 
   // useEffects
   useEffect(() => {
+    setIsLoading(true);
+    setError(false);
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2180eac4c664ce81bd7e87e191a8736d`
       )
       .then((res) => {
         console.log(res.data);
+        setIsLoading(false);
         setWeatherData({
           name: res.data.name,
           main: {
@@ -57,6 +70,10 @@ const WeatherApp = ({ city, setCity, isLoading }: WeatherAppProps) => {
           weather: res.data.weather,
           wind: res.data.wind.speed,
         });
+      })
+      .catch((err) => {
+        setError(true);
+        setIsLoading(false);
       });
   }, [city]);
 
@@ -86,7 +103,7 @@ const WeatherApp = ({ city, setCity, isLoading }: WeatherAppProps) => {
         </h1>
 
         <span className=" text-xl font-display z-10">
-          It's {weatherData.weather[0].main}
+          {weatherData.weather[0].main}
         </span>
 
         <div
@@ -115,6 +132,14 @@ const WeatherApp = ({ city, setCity, isLoading }: WeatherAppProps) => {
           search
         </button>
       </form>
+
+      {error && (
+        <div className="flex justify-center  items-center w-full ">
+          <span className="text-xl mx-auto rounded-lg bg-rose-50 py-2 px-3 text-red-500 text-display tracking-wide">
+            Something went wrong!
+          </span>
+        </div>
+      )}
     </div>
   );
 };

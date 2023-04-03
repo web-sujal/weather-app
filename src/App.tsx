@@ -3,7 +3,6 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import WeatherApp from "./pages/WeatherApp/WeatherApp";
 import axios from "axios";
-import Footer from "./components/Footer/Footer";
 
 function App() {
   const [city, setCity] = useState("");
@@ -35,7 +34,7 @@ function App() {
             }
           })
           .catch((err) => {
-            setError(err.message);
+            setError(true);
             setIsLoading(false);
           });
       }
@@ -45,12 +44,14 @@ function App() {
   return (
     <div className="relative min-h-screen" id="root">
       <Navbar city={city} />
-      <WeatherApp city={city} setCity={setCity} isLoading={isLoading} />
-      {error && (
-        <span className="text-xl mx-auto text-red-500 text-display tracking-wide">
-          Something went wrong!
-        </span>
-      )}
+      <WeatherApp
+        city={city}
+        setCity={setCity}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        error={error}
+        setError={setError}
+      />
       {/* <Footer /> */}
     </div>
   );
