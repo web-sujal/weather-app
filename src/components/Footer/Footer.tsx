@@ -3,12 +3,12 @@ import React from "react";
 const Footer = () => {
   return (
     <div
-      className="container flex justify-center bottom-0 w-full 
-    mt-10 px-5"
+      className="container fixed flex justify-center left-0 right-0
+       bottom-0 w-full px-3"
     >
       <div
-        className="absolute max-w-3xl w-full rounded-t-3xl
-       h-28 px-6 pt-4 bg-white"
+        className=" w-full rounded-t-3xl
+       h-28 px-6 py-4 bg-white"
       >
         Footer
       </div>

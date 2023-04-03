@@ -12,9 +12,10 @@ import axios from "axios";
 type WeatherAppProps = {
   city: string;
   setCity: Dispatch<SetStateAction<string>>;
+  isLoading: boolean;
 };
 
-const WeatherApp = ({ city, setCity }: WeatherAppProps) => {
+const WeatherApp = ({ city, setCity, isLoading }: WeatherAppProps) => {
   // states
   const [weatherData, setWeatherData] = useState({
     name: "",
@@ -79,7 +80,9 @@ const WeatherApp = ({ city, setCity }: WeatherAppProps) => {
         bg-clip-text bg-gradient-to-b from-white via-white to-transparent
         "
         >
-          {`${(weatherData.main.temp - 273.15).toFixed(1)}℃`}
+          {isLoading
+            ? "Loading..."
+            : `${(weatherData.main.temp - 273.15).toFixed(1)}℃`}
         </h1>
 
         <span className=" text-xl font-display z-10">
@@ -94,7 +97,7 @@ const WeatherApp = ({ city, setCity }: WeatherAppProps) => {
 
       {/* input */}
       <form
-        className="flex justify-center items-center mt-36"
+        className="flex justify-center items-center mt-36 mb-10"
         onSubmit={handleSubmit}
         action=""
       >

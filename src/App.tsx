@@ -7,13 +7,15 @@ import Footer from "./components/Footer/Footer";
 
 function App() {
   const [city, setCity] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
+      setIsLoading(true);
+      setError(false);
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
 
@@ -28,7 +30,7 @@ function App() {
               setCity(res.data[0].name);
               setIsLoading(false);
             } else {
-              setError("City Not Found!");
+              setError(true);
               setIsLoading(false);
             }
           })
@@ -40,19 +42,16 @@ function App() {
     });
   }, [latitude, longitude]);
 
-  if (isLoading) {
-    return <div className="">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="">{error}</div>;
-  }
-
   return (
     <div className="relative min-h-screen" id="root">
       <Navbar city={city} />
-      <WeatherApp city={city} setCity={setCity} />
-      <Footer />
+      <WeatherApp city={city} setCity={setCity} isLoading={isLoading} />
+      {error && (
+        <span className="text-xl mx-auto text-red-500 text-display tracking-wide">
+          Something went wrong!
+        </span>
+      )}
+      {/* <Footer /> */}
     </div>
   );
 }
