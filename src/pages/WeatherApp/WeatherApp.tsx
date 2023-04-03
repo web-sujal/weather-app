@@ -16,6 +16,8 @@ type WeatherAppProps = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   error: boolean;
   setError: Dispatch<SetStateAction<boolean>>;
+  isErrorVisible: boolean;
+  showError: (value: boolean) => void;
 };
 
 const WeatherApp = ({
@@ -25,6 +27,8 @@ const WeatherApp = ({
   setIsLoading,
   error,
   setError,
+  isErrorVisible,
+  showError,
 }: WeatherAppProps) => {
   // states
   const [weatherData, setWeatherData] = useState({
@@ -51,7 +55,7 @@ const WeatherApp = ({
   // useEffects
   useEffect(() => {
     setIsLoading(true);
-    setError(false);
+    showError(false);
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2180eac4c664ce81bd7e87e191a8736d`
@@ -72,7 +76,7 @@ const WeatherApp = ({
         });
       })
       .catch((err) => {
-        setError(true);
+        showError(true);
         setIsLoading(false);
       });
   }, [city]);
@@ -97,7 +101,7 @@ const WeatherApp = ({
         bg-clip-text bg-gradient-to-b from-white via-white to-transparent
         "
         >
-          {isLoading
+          {isLoading || weatherData.main.temp === 0
             ? "Loading..."
             : `${(weatherData.main.temp - 273.15).toFixed(1)}℃`}
         </h1>
@@ -133,7 +137,7 @@ const WeatherApp = ({
         </button>
       </form>
 
-      {error && (
+      {isErrorVisible && (
         <div className="flex justify-center  items-center w-full ">
           <span className="text-xl mx-auto rounded-lg bg-rose-50 py-2 px-3 text-red-500 text-display tracking-wide">
             Something went wrong!

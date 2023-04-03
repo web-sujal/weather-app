@@ -8,8 +8,21 @@ function App() {
   const [city, setCity] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [isErrorVisible, setIsErrorVisible] = useState(true);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+
+  const showError = (value: boolean) => {
+    setError(value);
+    setIsLoading(false);
+    setIsErrorVisible(value);
+    setTimeout(() => {
+      setIsErrorVisible(false);
+    }, 3000); // hide the error message after 3 seconds
+    setTimeout(() => {
+      setIsErrorVisible(false);
+    }, 6000); // make sure the error message is hidden after 6 seconds
+  };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -29,13 +42,12 @@ function App() {
               setCity(res.data[0].name);
               setIsLoading(false);
             } else {
-              setError(true);
+              showError(true);
               setIsLoading(false);
             }
           })
           .catch((err) => {
-            setError(true);
-            setIsLoading(false);
+            showError(true);
           });
       }
     });
@@ -51,6 +63,8 @@ function App() {
         setIsLoading={setIsLoading}
         error={error}
         setError={setError}
+        isErrorVisible={isErrorVisible}
+        showError={showError}
       />
       {/* <Footer /> */}
     </div>
