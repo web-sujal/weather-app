@@ -22,7 +22,7 @@ function App() {
       if (latitude !== 0 && longitude !== 0) {
         axios
           .get(
-            `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=2180eac4c664ce81bd7e87e191a8736d`
+            `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=2180eac4c664ce81bd7e87e191a8736d`
           )
           .then((res) => {
             if (res.data && res.data[0]) {
