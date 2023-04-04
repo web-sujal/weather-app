@@ -8,6 +8,8 @@ import React, {
   MutableRefObject,
 } from "react";
 import axios from "axios";
+import Input from "../../components/Input/Input";
+import AirIcon from "@mui/icons-material/Air";
 
 type WeatherAppProps = {
   city: string;
@@ -42,6 +44,7 @@ const WeatherApp = ({
     weather: [
       {
         main: "",
+        description: "",
       },
     ],
     wind: {
@@ -72,7 +75,9 @@ const WeatherApp = ({
             temp_min: res.data.main.temp_min,
           },
           weather: res.data.weather,
-          wind: res.data.wind.speed,
+          wind: {
+            speed: res.data.wind.speed,
+          },
         });
       })
       .catch((err) => {
@@ -107,7 +112,7 @@ const WeatherApp = ({
         </h1>
 
         <span className=" text-xl font-display z-10">
-          {weatherData.weather[0].main}
+          It's {weatherData.weather[0].description}
         </span>
 
         <div
@@ -116,29 +121,30 @@ const WeatherApp = ({
         ></div>
       </div>
 
-      {/* input */}
-      <form
-        className="flex justify-center items-center mt-36 mb-10"
-        onSubmit={handleSubmit}
-        action=""
+      {/* Other Weather Information */}
+      <section
+        id="otherWeatherInfo"
+        className="container max-w-4xl mx-auto border-2 border-white 
+      flex justify-center items-center space-x-4 py-2 w-full mt-4"
       >
-        <input
-          className="p-2 rounded-l-lg outline-none text-gray-700"
-          placeholder="enter city name..."
-          type="text"
-          ref={inputRef}
-        />
-        <button
-          className="py-2 px-4 bg-emerald-600 hover:bg-emerald-500 
-        duration-200 hover:scale-105 cursor-pointer transition hover:-translate-y-0.5
-        rounded-r-lg shadow-sm hover:shadow-md hover:shadow-rose-50 text-white"
+        {/* main{temp_max, humidity, temp_min}, wind{speed} */}
+        <div
+          className="flex flex-col space-y-2 items-center 
+        justify-center p-2"
         >
-          search
-        </button>
-      </form>
+          <AirIcon className="text-white" />
+          <p className="text-gray-400 text-sm">Wind Speed</p>
+          <p className="text-xl text-white font-bold">
+            {weatherData.wind.speed}
+          </p>
+        </div>
+      </section>
+
+      {/* Input component */}
+      <Input handleSubmit={handleSubmit} inputRef={inputRef} />
 
       {isErrorVisible && (
-        <div className="flex justify-center  items-center w-full ">
+        <div className="flex justify-center opacity-90 items-center w-full mt-4">
           <span className="text-xl mx-auto rounded-lg bg-rose-50 py-2 px-3 text-red-500 text-display tracking-wide">
             Something went wrong!
           </span>
