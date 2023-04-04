@@ -115,6 +115,7 @@ const WeatherApp = ({
           It's {weatherData.weather[0].description}
         </span>
 
+        {/* background */}
         <div
           className="absolute top-0 right-0 left-0 bottom-0 bg-black
          z-0 opacity-40"
@@ -124,20 +125,66 @@ const WeatherApp = ({
       {/* Other Weather Information */}
       <section
         id="otherWeatherInfo"
-        className="container max-w-4xl mx-auto border-2 border-white 
+        className="relative container max-w-4xl mx-auto 
       flex justify-center items-center space-x-4 py-2 w-full mt-4"
       >
-        {/* main{temp_max, humidity, temp_min}, wind{speed} */}
+        {/* humidity */}
         <div
           className="flex flex-col space-y-2 items-center 
-        justify-center p-2"
+        justify-center p-2 z-10"
         >
-          <AirIcon className="text-white" />
-          <p className="text-gray-400 text-sm">Wind Speed</p>
-          <p className="text-xl text-white font-bold">
+          <AirIcon className="text-white scale-125" />
+          <p className="text-white text-sm">Humidity</p>
+          <p className="text-2xl text-white font-bold">
+            {weatherData.main.humidity}
+          </p>
+        </div>
+
+        {/* wind speed */}
+        <div
+          className="flex flex-col space-y-2 items-center 
+        justify-center p-2 z-10"
+        >
+          <AirIcon className="text-white scale-125" />
+          <p className="text-white text-sm">Wind Speed</p>
+          <p className="text-2xl text-white font-bold">
             {weatherData.wind.speed}
           </p>
         </div>
+
+        {/* max temp */}
+        <div
+          className="flex flex-col space-y-2 items-center 
+        justify-center p-2 z-10"
+        >
+          <AirIcon className="text-white scale-125" />
+          <p className="text-white text-sm">Max Temp</p>
+          <p className="text-2xl text-white font-bold">
+            {isLoading || weatherData.main.temp_max === 0
+              ? "Loading..."
+              : `${(weatherData.main.temp_max - 273.15).toFixed(1)}°`}
+          </p>
+        </div>
+
+        {/* min temp */}
+        <div
+          className="flex flex-col space-y-2 items-center 
+        justify-center p-2 z-10"
+        >
+          <AirIcon className="text-white scale-125" />
+          <p className="text-white text-sm">Min Temp</p>
+          <p className="text-2xl text-white font-bold">
+            {isLoading || weatherData.main.temp_min === 0
+              ? "Loading..."
+              : `${(weatherData.main.temp_min - 273.15).toFixed(1)}°`}
+          </p>
+        </div>
+
+        {/* background */}
+        <div
+          className="absolute top-0 right-0 left-0 bottom-0 bg-white
+         z-0 opacity-30 -translate-x-2"
+        ></div>
       </section>
 
       {/* Input component */}
