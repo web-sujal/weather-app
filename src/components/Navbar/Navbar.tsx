@@ -1,12 +1,11 @@
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import useGeolocation from "../../hooks/useGeolocation";
 
-type NavbarProps = {
-  city: string;
-};
+const Navbar = () => {
+  const city = useGeolocation()?.city;
 
-const Navbar = ({ city }: NavbarProps) => {
   return (
     <div
       className="relative flex justify-between items-center py-4 

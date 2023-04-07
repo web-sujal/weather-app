@@ -1,37 +1,19 @@
-import React, {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-  useRef,
-  MutableRefObject,
-} from "react";
-import axios from "axios";
+import React, { FormEvent, useState, useRef, useContext } from "react";
 import Input from "../../components/Input/Input";
 import AirIcon from "@mui/icons-material/Air";
+import { AppContext } from "../../context/AppContext";
+import useWeatherData from "../../hooks/useWeatherData";
 
-type WeatherAppProps = {
-  city: string;
-  setCity: Dispatch<SetStateAction<string>>;
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-  error: boolean;
-  setError: Dispatch<SetStateAction<boolean>>;
-  isErrorVisible: boolean;
-  showError: (value: boolean) => void;
-};
+const WeatherApp = () => {
+  const context = useContext(AppContext);
 
-const WeatherApp = ({
-  city,
-  setCity,
-  isLoading,
-  setIsLoading,
-  error,
-  setError,
-  isErrorVisible,
-  showError,
-}: WeatherAppProps) => {
+  if (!context) {
+    // handle case where context is null
+    return <div>Loading...</div>;
+  }
+
+  const { setCity, isLoading, isErrorVisible } = context;
+
   // states
   const [weatherData, setWeatherData] = useState({
     name: "",
@@ -52,39 +34,11 @@ const WeatherApp = ({
     },
   });
 
+  // weatherData
+  useWeatherData({ weatherData, setWeatherData });
+
   // refs
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // useEffects
-  useEffect(() => {
-    setIsLoading(true);
-    showError(false);
-    axios
-      .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=2180eac4c664ce81bd7e87e191a8736d`
-      )
-      .then((res) => {
-        console.log(res.data);
-        setIsLoading(false);
-        setWeatherData({
-          name: res.data.name,
-          main: {
-            temp: res.data.main.temp,
-            humidity: res.data.main.humidity,
-            temp_max: res.data.main.temp_max,
-            temp_min: res.data.main.temp_min,
-          },
-          weather: res.data.weather,
-          wind: {
-            speed: res.data.wind.speed,
-          },
-        });
-      })
-      .catch((err) => {
-        showError(true);
-        setIsLoading(false);
-      });
-  }, [city]);
 
   // event handlers
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -97,7 +51,7 @@ const WeatherApp = ({
 
   return (
     <div className="">
-      <div
+      <section
         className="relative flex flex-col justify-center items-center
          space-y-1 mt-32 py-4 text-white"
       >
@@ -120,7 +74,7 @@ const WeatherApp = ({
           className="absolute top-0 right-0 left-0 bottom-0 bg-black
          z-0 opacity-40"
         ></div>
-      </div>
+      </section>
 
       {/* Other Weather Information */}
       <section
@@ -203,9 +157,5 @@ const WeatherApp = ({
 
 export default WeatherApp;
 
-// {weatherData.weather[0].main}
-// {weatherData.wind.speed}
-
-/* 
-use limit=5 for getting multiple cities name and show in pc version
-*/
+// use limit=5 for getting multiple cities name and show in pc version
+// api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid={API key}
