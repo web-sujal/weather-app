@@ -12,30 +12,10 @@ const WeatherApp = () => {
     return <div>Loading...</div>;
   }
 
-  const { setCity, isLoading, isErrorVisible } = context;
-
-  // states
-  const [weatherData, setWeatherData] = useState({
-    name: "",
-    main: {
-      temp: 0,
-      humidity: 0,
-      temp_max: 0,
-      temp_min: 0,
-    },
-    weather: [
-      {
-        main: "",
-        description: "",
-      },
-    ],
-    wind: {
-      speed: 0,
-    },
-  });
+  const { setCity } = context;
 
   // weatherData
-  useWeatherData({ weatherData, setWeatherData });
+  const { weatherData, isErrorVisible, isLoading } = useWeatherData();
 
   // refs
   const inputRef = useRef<HTMLInputElement>(null);

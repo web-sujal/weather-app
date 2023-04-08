@@ -1,39 +1,41 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
 
-interface WeatherDataProps {
-  name: string;
-  main: {
-    temp: number;
-    humidity: number;
-    temp_max: number;
-    temp_min: number;
-  };
-  weather: {
-    main: string;
-    description: string;
-  }[];
-  wind: {
-    speed: number;
-  };
-}
+const useWeatherData = () => {
+  // states
+  const [weatherData, setWeatherData] = useState({
+    name: "",
+    main: {
+      temp: 0,
+      humidity: 0,
+      temp_max: 0,
+      temp_min: 0,
+    },
+    weather: [
+      {
+        main: "",
+        description: "",
+      },
+    ],
+    wind: {
+      speed: 0,
+    },
+  });
 
-const useWeatherData = ({
-  weatherData,
-  setWeatherData,
-}: {
-  weatherData: WeatherDataProps;
-  setWeatherData: React.Dispatch<React.SetStateAction<WeatherDataProps>>;
-}) => {
+  // contextAPI
   const context = useContext(AppContext);
 
   if (!context) {
     // handle if context is null
-    return <div className="">Loading...</div>;
+    return {
+      isLoading: false,
+      isErrorVisible: true,
+      weatherData,
+    };
   }
 
-  const { setIsLoading, showError, city } = context;
+  const { setIsLoading, showError, isErrorVisible, city, isLoading } = context;
   const API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
@@ -65,6 +67,8 @@ const useWeatherData = ({
         setIsLoading(false);
       });
   }, [city]);
+
+  return { isLoading, isErrorVisible, weatherData };
 };
 
 export default useWeatherData;
