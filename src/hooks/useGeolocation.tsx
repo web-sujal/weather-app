@@ -6,7 +6,9 @@ const useGeolocation = () => {
   const context = useContext(AppContext);
   if (!context) {
     // Handles the case where the context value is null
-    return;
+    return {
+      city: "agra",
+    };
   }
 
   const {
