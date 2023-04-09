@@ -4,7 +4,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import useGeolocation from "../../hooks/useGeolocation";
 
 const Navbar = () => {
-  const city = useGeolocation()?.city;
+  const { city } = useGeolocation();
 
   return (
     <div

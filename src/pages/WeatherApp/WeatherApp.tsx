@@ -1,8 +1,9 @@
-import React, { FormEvent, useState, useRef, useContext } from "react";
+import React, { FormEvent, useRef, useContext } from "react";
 import Input from "../../components/Input/Input";
-import AirIcon from "@mui/icons-material/Air";
 import { AppContext } from "../../context/AppContext";
 import useWeatherData from "../../hooks/useWeatherData";
+import OtherWeatherInfo from "../../components/OtherWeatherInfo/OtherWeatherInfo";
+import MainWeatherInfo from "../../components/MainWeatherInfo/MainWeatherInfo";
 
 const WeatherApp = () => {
   const context = useContext(AppContext);
@@ -11,11 +12,9 @@ const WeatherApp = () => {
     // handle case where context is null
     return <div>Loading...</div>;
   }
-
   const { setCity } = context;
 
-  // weatherData
-  const { weatherData, isErrorVisible, isLoading } = useWeatherData();
+  const { isErrorVisible } = useWeatherData();
 
   // refs
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,95 +30,11 @@ const WeatherApp = () => {
 
   return (
     <div className="">
-      <section
-        className="relative flex flex-col justify-center items-center
-         space-y-1 mt-32 py-4 text-white"
-      >
-        <h1
-          className="text-6xl font-display z-10 text-transparent 
-        bg-clip-text bg-gradient-to-b from-white via-white to-transparent
-        "
-        >
-          {isLoading || weatherData.main.temp === 0
-            ? "Loading..."
-            : `${(weatherData.main.temp - 273.15).toFixed(1)}℃`}
-        </h1>
+      {/* main weather info */}
+      <MainWeatherInfo />
 
-        <span className=" text-xl font-display z-10">
-          It's {weatherData.weather[0].description}
-        </span>
-
-        {/* background */}
-        <div
-          className="absolute top-0 right-0 left-0 bottom-0 bg-black
-         z-0 opacity-40"
-        ></div>
-      </section>
-
-      {/* Other Weather Information */}
-      <section
-        id="otherWeatherInfo"
-        className="relative container max-w-4xl mx-auto 
-      flex justify-center items-center space-x-4 py-2 w-full mt-4"
-      >
-        {/* humidity */}
-        <div
-          className="flex flex-col space-y-2 items-center 
-        justify-center p-2 z-10"
-        >
-          <AirIcon className="text-white scale-125" />
-          <p className="text-white text-sm">Humidity</p>
-          <p className="text-2xl text-white font-bold">
-            {weatherData.main.humidity}
-          </p>
-        </div>
-
-        {/* wind speed */}
-        <div
-          className="flex flex-col space-y-2 items-center 
-        justify-center p-2 z-10"
-        >
-          <AirIcon className="text-white scale-125" />
-          <p className="text-white text-sm">Wind Speed</p>
-          <p className="text-2xl text-white font-bold">
-            {weatherData.wind.speed}
-          </p>
-        </div>
-
-        {/* max temp */}
-        <div
-          className="flex flex-col space-y-2 items-center 
-        justify-center p-2 z-10"
-        >
-          <AirIcon className="text-white scale-125" />
-          <p className="text-white text-sm">Max Temp</p>
-          <p className="text-2xl text-white font-bold">
-            {isLoading || weatherData.main.temp_max === 0
-              ? "Loading..."
-              : `${(weatherData.main.temp_max - 273.15).toFixed(1)}°`}
-          </p>
-        </div>
-
-        {/* min temp */}
-        <div
-          className="flex flex-col space-y-2 items-center 
-        justify-center p-2 z-10"
-        >
-          <AirIcon className="text-white scale-125" />
-          <p className="text-white text-sm">Min Temp</p>
-          <p className="text-2xl text-white font-bold">
-            {isLoading || weatherData.main.temp_min === 0
-              ? "Loading..."
-              : `${(weatherData.main.temp_min - 273.15).toFixed(1)}°`}
-          </p>
-        </div>
-
-        {/* background */}
-        <div
-          className="absolute top-0 right-0 left-0 bottom-0 bg-white
-         z-0 opacity-30 -translate-x-2"
-        ></div>
-      </section>
+      {/* Other Weather info */}
+      <OtherWeatherInfo />
 
       {/* Input component */}
       <Input handleSubmit={handleSubmit} inputRef={inputRef} />
@@ -138,4 +53,5 @@ const WeatherApp = () => {
 export default WeatherApp;
 
 // use limit=5 for getting multiple cities name and show in pc version
-// api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid={API key}
+// `api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}` forecast weather data
+// `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API key}` geocoding by city name

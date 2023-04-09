@@ -49,6 +49,9 @@ const useGeolocation = () => {
           })
           .catch((err) => {
             showError(true);
+          })
+          .finally(() => {
+            setIsLoading(false);
           });
       }
     });
