@@ -1,13 +1,26 @@
-import React from "react";
-import useWeatherData from "../../hooks/useWeatherData";
+import React, { useContext } from "react";
+import { WeatherContext } from "../../context/WeatherContext";
+import { AppContext } from "../../context/AppContext";
 
 const MainWeatherInfo = () => {
-  const { isLoading, weatherData } = useWeatherData();
+  // weather context
+  const weatherContext = useContext(WeatherContext);
+  if (!weatherContext) {
+    return <div className="">Loading...</div>;
+  }
+  const { weatherData } = weatherContext;
+
+  // app context
+  const appContext = useContext(AppContext);
+  if (!appContext) {
+    return <div className="">Loading...</div>;
+  }
+  const { isLoading } = appContext;
 
   return (
     <section
       className="relative flex flex-col justify-center items-center
-         space-y-1 mt-32 py-4 text-white"
+         space-y-1 mt-10 py-4 text-white md:mt-20"
     >
       <h1
         className="text-6xl font-display z-10 text-transparent 

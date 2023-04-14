@@ -31,30 +31,31 @@ const useGeolocation = () => {
       setError(false);
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
-
-      // reverse geocoding
-      if (latitude !== 0 && longitude !== 0) {
-        axios
-          .get(
-            `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_KEY}`
-          )
-          .then((res) => {
-            if (res.data && res.data[0]) {
-              setCity(res.data[0].name);
-              setIsLoading(false);
-            } else {
-              showError(true);
-              setIsLoading(false);
-            }
-          })
-          .catch((err) => {
-            showError(true);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
-      }
     });
+  }, []);
+
+  useEffect(() => {
+    if (latitude !== 0 && longitude !== 0) {
+      axios
+        .get(
+          `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${API_KEY}`
+        )
+        .then((res) => {
+          if (res.data && res.data[0]) {
+            setCity(res.data[0].name);
+            setIsLoading(false);
+          } else {
+            showError(true);
+            setIsLoading(false);
+          }
+        })
+        .catch((err) => {
+          showError(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   }, [latitude, longitude]);
 
   return {

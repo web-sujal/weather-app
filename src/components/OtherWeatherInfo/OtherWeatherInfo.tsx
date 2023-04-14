@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { WiHumidity } from "react-icons/wi";
 import { FaTemperatureLow, FaTemperatureHigh } from "react-icons/fa";
 import { FiWind } from "react-icons/fi";
-import useWeatherData from "../../hooks/useWeatherData";
+import { WeatherContext } from "../../context/WeatherContext";
+import { AppContext } from "../../context/AppContext";
 
 const OtherWeatherInfo = () => {
-  const { isLoading, weatherData } = useWeatherData();
+  // weather context
+  const weatherContext = useContext(WeatherContext);
+  if (!weatherContext) {
+    return <div className="">Loading...</div>;
+  }
+  const { weatherData } = weatherContext;
+
+  // app context
+  const appContext = useContext(AppContext);
+  if (!appContext) {
+    return <div className="">Loading...</div>;
+  }
+  const { isLoading } = appContext;
 
   return (
     <section

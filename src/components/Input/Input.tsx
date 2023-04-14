@@ -9,7 +9,7 @@ const Input = ({ handleSubmit, inputRef }: InputProps) => {
   return (
     <div className="">
       <form
-        className="flex justify-center items-center mt-20"
+        className="flex justify-center items-center mt-10"
         onSubmit={handleSubmit}
         action=""
       >

@@ -1,18 +1,26 @@
 import React, { FormEvent, useRef, useContext } from "react";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../context/AppContext";
+import { WeatherContext } from "../../context/WeatherContext";
 import useWeatherData from "../../hooks/useWeatherData";
 import OtherWeatherInfo from "../../components/OtherWeatherInfo/OtherWeatherInfo";
 import MainWeatherInfo from "../../components/MainWeatherInfo/MainWeatherInfo";
+import ForecastWeatherinfo from "../../components/ForecastWeatherInfo/ForecastWeatherInfo";
 
 const WeatherApp = () => {
-  const context = useContext(AppContext);
-
-  if (!context) {
-    // handle case where context is null
+  // app context
+  const appContext = useContext(AppContext);
+  if (!appContext) {
     return <div>Loading...</div>;
   }
-  const { setCity } = context;
+  const { setCity } = appContext;
+
+  // weather context
+  const weatherContext = useContext(WeatherContext);
+  if (!weatherContext) {
+    return <div className="">Loading...</div>;
+  }
+  const { forecastData } = weatherContext;
 
   const { isErrorVisible } = useWeatherData();
 
@@ -20,10 +28,17 @@ const WeatherApp = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // event handlers
+  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setCity((e.currentTarget[0] as HTMLInputElement).value);
+  //   if (inputRef.current) {
+  //     inputRef.current.value = "";
+  //   }
+  // };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCity((e.currentTarget[0] as HTMLInputElement).value);
     if (inputRef.current) {
+      setCity(inputRef.current.value);
       inputRef.current.value = "";
     }
   };
@@ -35,6 +50,10 @@ const WeatherApp = () => {
 
       {/* Other Weather info */}
       <OtherWeatherInfo />
+
+      {/* forecast weather info */}
+
+      <ForecastWeatherinfo />
 
       {/* Input component */}
       <Input handleSubmit={handleSubmit} inputRef={inputRef} />

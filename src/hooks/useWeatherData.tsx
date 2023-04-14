@@ -1,59 +1,62 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
+import { WeatherContext } from "../context/WeatherContext";
 
-interface ForecastDataProps {
+type ForecastDataProps = {
   dt_txt: string;
-}
+};
 
 const useWeatherData = () => {
-  // current weather data
-  const [weatherData, setWeatherData] = useState({
-    name: "",
-    main: {
-      temp: 0,
-      humidity: 0,
-      temp_max: 0,
-      temp_min: 0,
-    },
-    weather: [
-      {
-        main: "",
-        description: "",
-      },
-    ],
-    wind: {
-      speed: 0,
-    },
-    coord: {
-      latitude: 0,
-      longitude: 0,
-    },
-  });
-
-  // weather forecast data
-  const [forecastData, setForecastData] = useState([]);
-
-  const context = useContext(AppContext);
   const API_KEY = import.meta.env.VITE_API_KEY;
-
-  // getting current time "2023-04-08 21:00:00"
-  const currentTime = new Date();
-  const currentUTCTime = currentTime.toISOString();
-  // console.log(currentUTCTime);
 
   const defaultValues = {
     isLoading: false,
     isErrorVisible: true,
-    forecastData,
-    weatherData,
+    forecastData: [],
+    weatherData: {
+      name: "",
+      main: {
+        temp: 0,
+        humidity: 0,
+        temp_max: 0,
+        temp_min: 0,
+      },
+      weather: [
+        {
+          main: "",
+          description: "",
+        },
+      ],
+      wind: {
+        speed: 0,
+      },
+      coord: {
+        latitude: 0,
+        longitude: 0,
+      },
+    },
   };
 
-  if (!context) {
+  // app context
+  const appContext = useContext(AppContext);
+  if (!appContext) {
     return defaultValues;
   }
+  const { setIsLoading, isErrorVisible, showError, city, isLoading } =
+    appContext;
 
-  const { setIsLoading, isErrorVisible, showError, city, isLoading } = context;
+  // weather context
+  const weatherContext = useContext(WeatherContext);
+  if (!weatherContext) {
+    return defaultValues;
+  }
+  const { weatherData, forecastData, setWeatherData, setForecastData } =
+    weatherContext;
+
+  // getting current time
+  const currentTime = new Date();
+  const currentUTCTime = currentTime.toISOString();
 
   const fetchCurrentWeatherData = () => {
     setIsLoading(true);
@@ -105,7 +108,7 @@ const useWeatherData = () => {
           );
           setForecastData(futureTemps.slice(0, 4));
         }
-        console.log("\n\n\n");
+        console.log("\n\nUSEGEOLOCATION HOOK FORECAST DATA\n");
         console.log(forecastData);
       })
       .catch((err) => console.log(err));
