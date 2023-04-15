@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { WeatherContext } from "../../context/WeatherContext";
 import { AppContext } from "../../context/AppContext";
+import { getWeatherIcon } from "../ForecastWeatherInfo/ForecastWeatherInfo";
 
 const MainWeatherInfo = () => {
   // weather context
@@ -19,8 +20,8 @@ const MainWeatherInfo = () => {
 
   return (
     <section
-      className="relative flex flex-col justify-center items-center
-         space-y-1 mt-10 py-4 text-white md:mt-20"
+      className="relative container max-w-4xl w-full text-center flex flex-col justify-center 
+      items-center space-y-1 mt-6 mx-auto py-8 text-white"
     >
       <h1
         className="text-6xl font-display z-10 text-transparent 
@@ -32,14 +33,20 @@ const MainWeatherInfo = () => {
           : `${(weatherData.main.temp - 273.15).toFixed(1)}℃`}
       </h1>
 
-      <span className=" text-xl font-display z-10">
-        It's {weatherData.weather[0].description}
-      </span>
+      <div className="flex space-x-2 justify-center items-center text-xl z-10">
+        <span className="">It's {weatherData.weather[0].description}</span>
+        <span className="">
+          {getWeatherIcon(
+            weatherData.weather[0].main,
+            weatherData.weather[0].description
+          )}
+        </span>
+      </div>
 
       {/* background */}
       <div
-        className="absolute top-0 right-0 left-0 bottom-0 bg-black
-         z-0 opacity-40"
+        className="absolute top-0 right-2 left-2 bottom-0 bg-black
+         z-0 opacity-70"
       ></div>
     </section>
   );

@@ -23,66 +23,87 @@ const OtherWeatherInfo = () => {
   return (
     <section
       id="otherWeatherInfo"
-      className="relative container max-w-4xl mx-auto 
-      flex justify-center items-center space-x-4 py-2 w-full mt-4"
+      className="relative flex flex-col justify-center items-center space-y-1
+      max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800"
     >
-      {/* humidity */}
-      <div
-        className="flex flex-col space-y-2 items-center 
-        justify-center p-2 z-10"
-      >
-        <WiHumidity className="text-white text-4xl" />
-        <p className="text-white text-sm">Humidity</p>
-        <p className="text-2xl text-white font-bold">
-          {weatherData.main.humidity}
-        </p>
+      {/* know weather heading */}
+      <div className="flex justify-between space-x-4 w-full px-10 pb-1 text-xs text-gray-700 z-10">
+        {/* left border */}
+        <div className="flex items-center justify-center h-auto w-full">
+          <div className="border-b-2 border-gray-600 w-full"></div>
+        </div>
+
+        {/* heading */}
+        <div className="text-center tracking-widest px-4 whitespace-nowrap w-auto">
+          KNOW WEATHER
+        </div>
+
+        {/* right border */}
+        <div className="flex items-center justify-center h-auto w-full">
+          <div className="border-b-2 border-gray-600 w-full"></div>
+        </div>
       </div>
 
-      {/* wind speed */}
-      <div
-        className="flex flex-col space-y-2 items-center 
+      {/* know weather content */}
+      <div className="flex justify-center items-center space-x-4  w-full mt-4">
+        {/* humidity */}
+        <div
+          className="flex flex-col space-y-1 items-center 
         justify-center p-2 z-10"
-      >
-        <FiWind className="text-white text-4xl" />
-        <p className="text-white text-sm">Wind Speed</p>
-        <p className="text-2xl text-white font-bold">
-          {weatherData.wind.speed}
-        </p>
-      </div>
+        >
+          <WiHumidity className="text-gray-800 pb- text-3xl" />
+          <p className="text-gray-800 text-sm">Humidity</p>
+          <p className="text-2xl text-gray-800 font-bold">
+            {weatherData.main.humidity}
+          </p>
+        </div>
 
-      {/* max temp */}
-      <div
-        className="flex flex-col space-y-2 items-center 
+        {/* wind speed */}
+        <div
+          className="flex flex-col space-y-1 items-center 
         justify-center p-2 z-10"
-      >
-        <FaTemperatureHigh className="text-white text-4xl" />
-        <p className="text-white text-sm">Max Temp</p>
-        <p className="text-2xl text-white font-bold">
-          {isLoading || weatherData.main.temp_max === 0
-            ? "Loading..."
-            : `${(weatherData.main.temp_max - 273.15).toFixed(1)}°`}
-        </p>
-      </div>
+        >
+          <FiWind className="text-gray-800 pb- text-3xl" />
+          <p className="text-gray-800 text-sm">Wind Speed</p>
+          <p className="text-2xl text-gray-800 font-bold">
+            {weatherData.wind.speed}
+          </p>
+        </div>
 
-      {/* min temp */}
-      <div
-        className="flex flex-col space-y-2 items-center 
+        {/* max temp */}
+        <div
+          className="flex flex-col space-y-1 items-center 
         justify-center p-2 z-10"
-      >
-        <FaTemperatureLow className="text-white text-4xl" />
-        <p className="text-white text-sm">Min Temp</p>
-        <p className="text-2xl text-white font-bold">
-          {isLoading || weatherData.main.temp_min === 0
-            ? "Loading..."
-            : `${(weatherData.main.temp_min - 273.15).toFixed(1)}°`}
-        </p>
-      </div>
+        >
+          <FaTemperatureHigh className="text-gray-800 pb- text-3xl" />
+          <p className="text-gray-800 text-sm">Max Temp</p>
+          <p className="text-2xl text-gray-800 font-bold">
+            {isLoading || weatherData.main.temp_max === 0
+              ? "Loading..."
+              : `${(weatherData.main.temp_max - 273.15).toFixed(1)}°`}
+          </p>
+        </div>
 
-      {/* background */}
-      <div
-        className="absolute top-0 right-0 left-0 bottom-0 bg-white
-         z-0 opacity-30 -translate-x-2"
-      ></div>
+        {/* min temp */}
+        <div
+          className="flex flex-col space-y-1 items-center 
+        justify-center p-2 z-10"
+        >
+          <FaTemperatureLow className="text-gray-800 pb- text-3xl" />
+          <p className="text-gray-800 text-sm">Min Temp</p>
+          <p className="text-2xl text-gray-800 font-bold">
+            {isLoading || weatherData.main.temp_min === 0
+              ? "Loading..."
+              : `${(weatherData.main.temp_min - 273.15).toFixed(1)}°`}
+          </p>
+        </div>
+
+        {/* background */}
+        <div
+          className="absolute top-0 right-0 left-0 bottom-0 bg-white
+         z-0 opacity-70 -translate-x-2"
+        ></div>
+      </div>
     </section>
   );
 };
