@@ -66,7 +66,7 @@ const ForecastWeatherinfo = () => {
     <section>
       <div
         className="relative flex flex-col justify-center items-center space-y-1
-       max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800"
+       max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800 overflow-x-auto"
       >
         {/* know forecast heading */}
         <div className="flex justify-between space-x-4 w-full px-10 pb-1 text-xs text-gray-700 z-10">
@@ -88,8 +88,8 @@ const ForecastWeatherinfo = () => {
 
         {/* know forecast content */}
         <div
-          className="flex justify-center items-center space-x-4
-        mx-auto w-full pb-1 text-gray-800"
+          className="flex justify-center items-center space-x-2 md:space-x-4
+        mx-auto w-full pb-1 px-1 text-gray-800"
         >
           {forecastData.map((data, index) => (
             <div key={index} className="text-center z-10 px-2">
@@ -124,7 +124,7 @@ const ForecastWeatherinfo = () => {
 
           {/* background */}
           <div
-            className="absolute top-0 left-0 right-0 bottom-0
+            className="absolute top-0 right-0 left-2 md:left-0 bottom-0
              bg-white opacity-70 z-0 -translate-x-2"
           ></div>
         </div>

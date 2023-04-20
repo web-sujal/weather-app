@@ -24,7 +24,7 @@ const OtherWeatherInfo = () => {
     <section
       id="otherWeatherInfo"
       className="relative flex flex-col justify-center items-center space-y-1
-      max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800"
+      max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800 overflow-x-auto"
     >
       {/* know weather heading */}
       <div className="flex justify-between space-x-4 w-full px-10 pb-1 text-xs text-gray-700 z-10">
@@ -45,7 +45,10 @@ const OtherWeatherInfo = () => {
       </div>
 
       {/* know weather content */}
-      <div className="flex justify-center items-center space-x-4  w-full mt-4">
+      <div
+        className="flex justify-center items-center space-x-2 md:space-x-4
+       w-full mt-4 px-1"
+      >
         {/* humidity */}
         <div
           className="flex flex-col space-y-1 items-center 
@@ -100,7 +103,7 @@ const OtherWeatherInfo = () => {
 
         {/* background */}
         <div
-          className="absolute top-0 right-0 left-0 bottom-0 bg-white
+          className="absolute top-0 right-0 left-2 md:left-0 bottom-0 bg-white
          z-0 opacity-70 -translate-x-2"
         ></div>
       </div>
