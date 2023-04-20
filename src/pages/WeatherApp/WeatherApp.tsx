@@ -27,14 +27,6 @@ const WeatherApp = () => {
   // refs
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // event handlers
-  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setCity((e.currentTarget[0] as HTMLInputElement).value);
-  //   if (inputRef.current) {
-  //     inputRef.current.value = "";
-  //   }
-  // };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputRef.current) {
@@ -70,7 +62,3 @@ const WeatherApp = () => {
 };
 
 export default WeatherApp;
-
-// use limit=5 for getting multiple cities name and show in pc version
-// `api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}` forecast weather data
-// `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${API key}` geocoding by city name

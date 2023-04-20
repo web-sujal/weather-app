@@ -8,8 +8,8 @@ const Navbar = () => {
 
   return (
     <div
-      className="relative flex justify-between items-center py-4 
-      px-2 text-white"
+      className="sticky top-0 flex justify-between items-center py-4 
+      px-2 text-white z-50"
     >
       <div
         className="flex space-x-1 items-center justify-center 
@@ -25,7 +25,7 @@ const Navbar = () => {
       {/* gradient */}
       <div
         className="absolute top-0 right-0 left-0 bottom-0 h-full
-         bg-gradient-to-b from-black to-transparent opacity-50 z-0"
+         bg-gradient-to-b from-black to-transparent opacity-90 z-0"
       ></div>
     </div>
   );
