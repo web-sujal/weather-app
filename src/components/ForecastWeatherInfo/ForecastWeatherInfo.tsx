@@ -130,7 +130,7 @@ const ForecastWeatherinfo = () => {
 
           {/* background */}
           <div
-            className="absolute top-0 right-0 left-2 md:left-0 bottom-0
+            className="absolute top-0 right-0 left-3 md:left-0 bottom-0
              bg-white opacity-70 z-0 -translate-x-2"
           ></div>
         </div>
