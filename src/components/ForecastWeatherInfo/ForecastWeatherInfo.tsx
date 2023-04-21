@@ -54,6 +54,11 @@ export function getWeatherIcon(
   }
 }
 
+function twelveHourFormat(time: string) {
+  const newTime = Number(time);
+  return newTime > 12 ? newTime - 12 : newTime;
+}
+
 const ForecastWeatherinfo = () => {
   // weather context
   const weatherContext = useContext(WeatherContext);
@@ -66,7 +71,7 @@ const ForecastWeatherinfo = () => {
     <section>
       <div
         className="relative flex flex-col justify-center items-center space-y-1
-       max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800 overflow-x-auto"
+       max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500"
       >
         {/* know forecast heading */}
         <div className="flex justify-between space-x-4 w-full px-10 pb-1 text-xs text-gray-700 z-10">
@@ -88,7 +93,7 @@ const ForecastWeatherinfo = () => {
 
         {/* know forecast content */}
         <div
-          className="flex justify-center items-center space-x-2 md:space-x-4
+          className="flex justify-center items-center space-x-1 md:space-x-4
         mx-auto w-full pb-1 px-1 text-gray-800"
         >
           {forecastData.map((data, index) => (
@@ -105,7 +110,8 @@ const ForecastWeatherinfo = () => {
               {/* time */}
               <div className="">
                 <span className="text-sm md:text-lg">
-                  {data.dt_txt.toString().slice(11, 16)}
+                  {twelveHourFormat(data.dt_txt.toString().slice(11, 13))}
+                  {data.dt_txt.toString().slice(13, 16)}
                 </span>
                 <span className="text-sm md:text-lg">
                   {new Date(data.dt_txt).toLocaleTimeString().slice(0, 5) >=
@@ -116,7 +122,7 @@ const ForecastWeatherinfo = () => {
               </div>
 
               {/* temperature */}
-              <p className="text-2xl font-bold">
+              <p className="text-xl md:text-2xl font-bold">
                 {(data.main.temp - 273.15).toFixed(1)}℃
               </p>
             </div>

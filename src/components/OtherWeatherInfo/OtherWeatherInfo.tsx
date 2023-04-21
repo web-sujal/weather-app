@@ -24,7 +24,7 @@ const OtherWeatherInfo = () => {
     <section
       id="otherWeatherInfo"
       className="relative flex flex-col justify-center items-center space-y-1
-      max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800 overflow-x-auto"
+      max-w-4xl mx-auto w-full mt-4 py-3 text-gray-800 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500"
     >
       {/* know weather heading */}
       <div className="flex justify-between space-x-4 w-full px-10 pb-1 text-xs text-gray-700 z-10">

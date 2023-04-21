@@ -108,8 +108,6 @@ const useWeatherData = () => {
           );
           setForecastData(futureTemps.slice(0, 4));
         }
-        console.log("\n\nUSEGEOLOCATION HOOK FORECAST DATA\n");
-        console.log(forecastData);
       })
       .catch((err) => console.log(err));
   };

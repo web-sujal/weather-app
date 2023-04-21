@@ -44,8 +44,6 @@ function getBg(main: string, description: string, isMobile: boolean): string {
 
 function App() {
   const isMobile = window.innerWidth < 768;
-  console.log(isMobile);
-  console.log(window.innerWidth);
 
   const weatherContext = useContext(WeatherContext);
   if (!weatherContext) {
