@@ -15,7 +15,7 @@ const Input = ({ handleSubmit, inputRef }: InputProps) => {
       >
         <input
           className="p-2 rounded-l-lg outline-none text-gray-700"
-          placeholder="enter city name..."
+          placeholder="Enter city..."
           type="text"
           ref={inputRef}
         />
